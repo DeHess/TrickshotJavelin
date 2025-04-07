@@ -16,21 +16,16 @@ public class SpearLauncher : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log("down we go");
         dragStartPos = GetMouseWorldPosition();
         isDragging = true;
     }
 
     void OnMouseUp()
     {
-        Debug.Log("Up we go");
         if (!isDragging) return;
-        Debug.Log("still Going up strong");
 
         Vector2 dragEndPos = GetMouseWorldPosition();
         Vector2 launchDirection = dragStartPos - dragEndPos; // Opposite direction
-        
-        Debug.Log(launchDirection);
 
         spearRigidbody.bodyType = RigidbodyType2D.Dynamic; // In case it starts as kinematic
         spearRigidbody.linearVelocity = Vector2.zero;
