@@ -25,9 +25,9 @@ public class SpearLauncher : MonoBehaviour
         if (!isDragging) return;
 
         Vector2 dragEndPos = GetMouseWorldPosition();
-        Vector2 launchDirection = dragStartPos - dragEndPos; // Opposite direction
+        Vector2 launchDirection = dragStartPos - dragEndPos;
 
-        spearRigidbody.bodyType = RigidbodyType2D.Dynamic; // In case it starts as kinematic
+        spearRigidbody.bodyType = RigidbodyType2D.Dynamic;
         spearRigidbody.linearVelocity = Vector2.zero;
         spearRigidbody.AddForce(launchDirection * launchForceMultiplier, ForceMode2D.Impulse);
 
