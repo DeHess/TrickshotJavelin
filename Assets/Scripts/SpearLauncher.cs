@@ -14,24 +14,33 @@ public class SpearLauncher : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    void OnMouseDown()
+    void Update()
     {
-        dragStartPos = GetMouseWorldPosition();
-        isDragging = true;
-    }
+        if (Input.GetMouseButtonDown(0))
+        {
+            dragStartPos = GetMouseWorldPosition();
+            isDragging = true;
+        }
 
-    void OnMouseUp()
-    {
-        if (!isDragging) return;
+        if (Input.GetMouseButton(0) && isDragging)
+        {
+            Vector2 currentDragPos = GetMouseWorldPosition();
+            Vector2 dragDirection = dragStartPos - currentDragPos;
+            float angle = Mathf.Atan2(dragDirection.y, dragDirection.x) * Mathf.Rad2Deg;
+            spearRigidbody.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        }
 
-        Vector2 dragEndPos = GetMouseWorldPosition();
-        Vector2 launchDirection = dragStartPos - dragEndPos;
+        if (Input.GetMouseButtonUp(0) && isDragging)
+        {
+            Vector2 dragEndPos = GetMouseWorldPosition();
+            Vector2 launchDirection = dragStartPos - dragEndPos;
 
-        spearRigidbody.bodyType = RigidbodyType2D.Dynamic;
-        spearRigidbody.linearVelocity = Vector2.zero;
-        spearRigidbody.AddForce(launchDirection * launchForceMultiplier, ForceMode2D.Impulse);
+            spearRigidbody.bodyType = RigidbodyType2D.Dynamic;
+            spearRigidbody.linearVelocity = Vector2.zero;
+            spearRigidbody.AddForce(launchDirection * launchForceMultiplier, ForceMode2D.Impulse);
 
-        isDragging = false;
+            isDragging = false;
+        }
     }
 
     Vector2 GetMouseWorldPosition()
