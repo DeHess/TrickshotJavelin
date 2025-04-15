@@ -1,27 +1,40 @@
 using UnityEngine;
 
-public class StopMomentumOnCollision : MonoBehaviour
+public class CollisionJointCreator : MonoBehaviour
 {
-    public Rigidbody parentRigidbody;
-    public Rigidbody[] childRigidbodies;
-
-    void OnCollisionEnter(Collision collision)
+    
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        Debug.Log("Collision detected! backshot = " + GameManager.backshot);
+        if (other.CompareTag("Ground"))
         {
-            StopMomentum();
-        }
-    }
+            // Create a FixedJoint2D and attach to the ground
+            FixedJoint2D joint = gameObject.AddComponent<FixedJoint2D>();
+            Rigidbody2D groundRb = other.attachedRigidbody;
 
-    void StopMomentum()
-    {
-        parentRigidbody.linearVelocity = Vector3.zero;
-        parentRigidbody.angularVelocity = Vector3.zero;
+            if (groundRb != null)
+            {
+                joint.connectedBody = groundRb;
+            }
+            else
+            {
+                // If the ground doesn't have a Rigidbody2D, the joint will treat it as static
+                joint.connectedBody = null;
+            }
 
-        foreach (Rigidbody rb in childRigidbodies)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            // Stop movement of this object and all its parents
+            Transform current = transform;
+            while (current != null)
+            {
+                Rigidbody2D rb = current.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    rb.angularVelocity = 0f;
+                    rb.bodyType = RigidbodyType2D.Kinematic;
+                }
+                current = current.parent;
+            }
         }
     }
 }

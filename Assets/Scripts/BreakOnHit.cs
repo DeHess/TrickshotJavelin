@@ -6,7 +6,7 @@ public class BreakOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Spear"))
+        if (other.CompareTag("SpearTip"))
         {
             Instantiate(brokenVersion, transform.position, Quaternion.identity);
             Destroy(gameObject);

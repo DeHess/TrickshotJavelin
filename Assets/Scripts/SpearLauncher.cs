@@ -4,6 +4,7 @@ public class SpearLauncher : MonoBehaviour
 {
     public Rigidbody2D spearRigidbody;
     public float launchForceMultiplier = 10f;
+    public LineRenderer directionLine;
 
     private Vector2 dragStartPos;
     private bool isDragging = false;
@@ -12,6 +13,18 @@ public class SpearLauncher : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+        if (directionLine != null)
+        {
+            directionLine.positionCount = 2;
+            directionLine.enabled = false;
+        }
+        directionLine.startWidth = 0.02f;
+        directionLine.endWidth = 0.02f;
+        directionLine.startColor = Color.white;
+        directionLine.endColor = Color.white;
+        directionLine.material = new Material(Shader.Find("Unlit/Color"));
+        directionLine.material.color = Color.white;
+
     }
 
     void Update()
@@ -26,8 +39,16 @@ public class SpearLauncher : MonoBehaviour
         {
             Vector2 currentDragPos = GetMouseWorldPosition();
             Vector2 dragDirection = dragStartPos - currentDragPos;
+
             float angle = Mathf.Atan2(dragDirection.y, dragDirection.x) * Mathf.Rad2Deg;
             spearRigidbody.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+            if (directionLine != null)
+            {
+                directionLine.enabled = true;
+                directionLine.SetPosition(0, spearRigidbody.transform.position);
+                directionLine.SetPosition(1, spearRigidbody.transform.position + (Vector3)(dragDirection.normalized * 5f));
+            }
         }
 
         if (Input.GetMouseButtonUp(0) && isDragging)
@@ -39,8 +60,12 @@ public class SpearLauncher : MonoBehaviour
             spearRigidbody.linearVelocity = Vector2.zero;
             spearRigidbody.AddForce(launchDirection * launchForceMultiplier, ForceMode2D.Impulse);
 
+            if (directionLine != null)
+                directionLine.enabled = false;
+
             isDragging = false;
         }
+
     }
 
     Vector2 GetMouseWorldPosition()
