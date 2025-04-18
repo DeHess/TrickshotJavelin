@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpearLauncher : MonoBehaviour
 {
     public Rigidbody2D spearRigidbody;
-    public float launchForceMultiplier = 10f;
+    public float launchForceMultiplier = 15f;
     public LineRenderer directionLine;
 
     private Vector2 dragStartPos;

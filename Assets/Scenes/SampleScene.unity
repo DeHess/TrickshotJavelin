@@ -713,7 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spearRigidbody: {fileID: 1701218655}
-  launchForceMultiplier: 10
+  launchForceMultiplier: 15
   directionLine: {fileID: 1039030713}
 --- !u!120 &1039030713
 LineRenderer:
@@ -836,6 +836,7 @@ GameObject:
   - component: {fileID: 1055196633}
   - component: {fileID: 1055196634}
   - component: {fileID: 1055196635}
+  - component: {fileID: 1055196636}
   m_Layer: 0
   m_Name: Shaft
   m_TagString: Untagged
@@ -1017,6 +1018,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf2b2fda261da84d84d953952f95cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!255 &1055196636
+FixedJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055196629}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 1838809179}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 1
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0.00000025663994, y: -2.118013}
+  m_DampingRatio: 0
+  m_Frequency: 0
 --- !u!1 &1073830592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,10 +1484,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
