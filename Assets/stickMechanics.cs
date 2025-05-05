@@ -2,7 +2,15 @@ using UnityEngine;
 
 public class CollisionJointCreator : MonoBehaviour
 {
-    
+    public AudioClip stickSound; // Add this to assign the stick sound
+
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Collision detected! backshot = " + GameManager.backshot);
@@ -20,6 +28,12 @@ public class CollisionJointCreator : MonoBehaviour
             {
                 // If the ground doesn't have a Rigidbody2D, the joint will treat it as static
                 joint.connectedBody = null;
+            }
+
+            // Play stick sound
+            if (audioSource != null && stickSound != null)
+            {
+                audioSource.PlayOneShot(stickSound);
             }
 
             // Stop movement of this object and all its parents
