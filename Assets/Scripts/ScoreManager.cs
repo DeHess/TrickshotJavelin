@@ -27,6 +27,11 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreText();
     }
 
+    public int GetPoints()
+    {
+        return score;
+    }
+
     void UpdateScoreText()
     {
         scoreText.text = "Score: " + score.ToString();

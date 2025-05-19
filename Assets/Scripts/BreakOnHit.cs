@@ -30,21 +30,24 @@ public class BreakOnHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Disable the visual and physical components
-        if (meshRenderer != null) meshRenderer.enabled = false;
-        if (collider != null) collider.enabled = false;
-
-        // Play the break sound
-        if (audioSource != null && breakSound != null)
+        if (other.CompareTag("SpearTip"))
         {
-            audioSource.clip = breakSound;
-            audioSource.Play();
-        }
-        Instantiate(brokenVersion, transform.position, Quaternion.identity);
-        Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
-        ScoreManager.instance.AddPoints(100);
+            // Disable the visual and physical components
+            if (meshRenderer != null) meshRenderer.enabled = false;
+            if (collider != null) collider.enabled = false;
 
-        // Destroy the GameObject after the sound finishes playing
-        Destroy(gameObject, breakSound.length);
+            // Play the break sound
+            if (audioSource != null && breakSound != null)
+            {
+                audioSource.clip = breakSound;
+                audioSource.Play();
+            }
+            Instantiate(brokenVersion, transform.position, Quaternion.identity);
+            Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
+            ScoreManager.instance.AddPoints(100);
+
+            // Destroy the GameObject after the sound finishes playing
+            Destroy(gameObject, breakSound.length);
+        }
     }
 }
