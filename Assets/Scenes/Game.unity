@@ -1882,7 +1882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brokenVersion: {fileID: 8935984733103120740, guid: f5d8fe573ff96f540854ecf368ae6cf7, type: 3}
   floatingTextPrefab: {fileID: 1878611125504804282, guid: cde0b5455f77803409558d052de580aa, type: 3}
-  breakSound: {fileID: 0}
+  breakSound: {fileID: 8300000, guid: a9fb75fdfeab39a4cb0fd8afc9b55da7, type: 3}
 --- !u!1 &1332095058
 GameObject:
   m_ObjectHideFlags: 0
