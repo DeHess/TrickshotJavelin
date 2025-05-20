@@ -5,7 +5,10 @@ public class SpearLauncher : MonoBehaviour
     public Rigidbody2D spearRigidbody;
     public float launchForceMultiplier = 15f;
     public LineRenderer directionLine;
-    public AudioClip gruntSound; // Add this to assign the grunt sound
+    public AudioClip gruntSound;
+    public float zoomSpeed = 2f;          // Speed of zoom
+    public float minZoom = 2f;            // Minimum camera size
+    public float maxZoom = 10f;           // Maximum camera size
 
     private AudioSource audioSource;
     private Vector2 dragStartPos;
@@ -32,6 +35,8 @@ public class SpearLauncher : MonoBehaviour
 
     void Update()
     {
+        HandleZoom();
+
         if (Input.GetMouseButtonDown(0))
         {
             dragStartPos = GetMouseWorldPosition();
@@ -65,13 +70,23 @@ public class SpearLauncher : MonoBehaviour
 
             if (audioSource != null && gruntSound != null)
             {
-                audioSource.PlayOneShot(gruntSound); // Play grunt sound here
+                audioSource.PlayOneShot(gruntSound);
             }
 
             if (directionLine != null)
                 directionLine.enabled = false;
 
             isDragging = false;
+        }
+    }
+
+    void HandleZoom()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0f)
+        {
+            mainCamera.orthographicSize -= scroll * zoomSpeed;
+            mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize, minZoom, maxZoom);
         }
     }
 
